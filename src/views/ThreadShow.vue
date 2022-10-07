@@ -5,7 +5,7 @@ import data from "@/data.json";
 
 const props = defineProps({
   id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
@@ -30,28 +30,25 @@ onMounted(() => {
 
 <template>
   <div class="container">
-    <h1>{{ thread.title }}</h1>
-    <div class="card mb-3" v-for="postId in thread.posts" :key="postId">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img
-            :src="getImageSrc(postId)"
-            class="img-fluid rounded-start"
-            :alt="getUserById(getPostById(postId).userId).name"
-          />
+     <h1>{{ thread.title }}</h1>
+    <div class="card my-5" v-for="postId in thread.posts" :key="postId">
+        <div class="card-header">
+          {{getUserById(getPostById(postId).userId).name}} Post In {{ thread.title }}
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <p class="card-text">{{ getPostById(postId).text }}</p>
-            <p class="card-text">
-              <b>By</b>&nbsp;<small class="text-muted">{{
-                getUserById(getPostById(postId).userId).name
-              }}</small>
-              &nbsp; <b>On</b>&nbsp;{{ getPostById(postId).publishedAt }}
-            </p>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3 text-center">
+              <img :src="getImageSrc(postId)" class="rounded mb-2 img-fluid rounded-start"
+                :alt="getUserById(getPostById(postId).userId).name" />
+            </div>
+            <div class="col">
+              <p class="card-text">{{ getPostById(postId).text }}</p>
+              <p class="mb-4"><b>Published On:</b> {{ getPostById(postId).publishedAt }}</p>
+              <a href="#" class="btn btn-primary">Read More</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+     
+  </div> 
 </template>

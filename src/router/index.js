@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import ThreadShow from "../views/ThreadShow.vue";
+import HomeView from "@/views/HomeView.vue";
+import ThreadShow from "@/views/ThreadShow.vue";
+import NotFound from "@/views/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
       name: "threads.show",
       component: ThreadShow,
       props: true,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: NotFound,
     },
   ],
 });
