@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
+import { onMounted, ref, computed } from "vue";
+import PostList from '@/components/posts/PostIndex.vue';
 import data from "@/data.json";
 
 const props = defineProps({
@@ -13,42 +13,44 @@ const props = defineProps({
 const threads = ref([]);
 const thread = ref([]);
 const posts = ref([]);
-const users = ref([]);
+const text = ref('');
 
-const getPostById = (id) => posts.value.find((post) => post.id === id);
-const getUserById = (id) => users.value.find((user) => user.id === id);
-const getImageSrc = (id) =>
-  `https://i.pravatar.cc/500?img=${getUserById(getPostById(id).userId).id}`;
+const threadPosts = computed(() => posts.value.filter(post => post.threadId === props.id));
+
+const handleAddPost = () => {
+
+  const postId = Math.random();
+  const post = {
+    id: postId,
+    publishedAt: Math.floor(Date.now() / 100), 
+    text: text.value, 
+    threadId: props.id, 
+    userId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
+  };
+  
+  posts.value.push(post);
+  thread.value.posts.push(postId);
+  text.value = "";
+}
 
 onMounted(() => {
   threads.value = data.threads;
-  posts.value = data.posts;
-  users.value = data.users;
   thread.value = threads.value.find((thread) => thread.id === props.id);
+  posts.value = data.posts;
 });
 </script>
 
 <template>
   <div class="container">
-     <h1>{{ thread.title }}</h1>
-    <div class="card my-5" v-for="postId in thread.posts" :key="postId">
-        <div class="card-header">
-          {{getUserById(getPostById(postId).userId).name}} Post In {{ thread.title }}
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-3 text-center">
-              <img :src="getImageSrc(postId)" class="rounded mb-2 img-fluid rounded-start"
-                :alt="getUserById(getPostById(postId).userId).name" />
-            </div>
-            <div class="col">
-              <p class="card-text">{{ getPostById(postId).text }}</p>
-              <p class="mb-4"><b>Published On:</b> {{ getPostById(postId).publishedAt }}</p>
-              <a href="#" class="btn btn-primary">Read More</a>
-            </div>
-          </div>
-        </div>
+    <h1>{{ thread.title }}</h1>
+    <PostList :posts="threadPosts" />
+    <hr>
+    <h2 class="display-6">Add New Post</h2>
+    <form @submit.prevent="handleAddPost">
+      <div class="mb-3">
+        <textarea v-model="text" class="form-control" id="text" placeholder="Write post"></textarea>
       </div>
-     
-  </div> 
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
 </template>

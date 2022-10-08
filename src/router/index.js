@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
+import Home from "@/views/Home.vue";
 import ThreadShow from "@/views/ThreadShow.vue";
 import NotFound from "@/views/NotFound.vue";
 import data from "@/data.json";
@@ -8,15 +8,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: HomeView,
+      path: "/", name: "home", component: Home,
     },
     {
-      path: "/threads/:id",
-      name: "threads.show",
-      component: ThreadShow,
-      props: true,
+      path: "/threads/:id", name: "threads.show", component: ThreadShow, props: true,
       beforeEnter(to, from, next) {
         const threadExists = data.threads.find(
           (thread) => thread.id === to.params.id
@@ -31,9 +26,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "404",
-      component: NotFound,
+      path: "/:pathMatch(.*)*", name: "404", component: NotFound,
     },
   ],
 });
