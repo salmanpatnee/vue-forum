@@ -1,18 +1,19 @@
 <script setup>
 import data from "@/data.json";
 import { onMounted, ref } from "vue";
-import ThreadList from "@/components/threads/ThreadIndex.vue";
+import ForumList from "@/components/forums/ForumIndex.vue";
 
-const threads = ref([]);
+const forums = ref([]);
 
 onMounted(() => {
-  threads.value = data.threads;
+  forums.value = data.forums;
 });
 
 </script>
 
 <template>
   <div class="container">
-    <ThreadList :threads="threads"/>
+    <h1 class="display-5 mb-5">Forums</h1>
+    <ForumList :forums="forums"/>
   </div>
 </template>

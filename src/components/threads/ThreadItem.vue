@@ -27,7 +27,9 @@ onMounted(() => {
     <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
                 <div class="fw-bold">{{thread.title}}</div>
-                <!-- By <a href="#">{{getUserById(thread.userId).name}}</a>, {{thread.publishedAt}} -->
+                <em>Published at:</em>  <b>
+                    <AppDate :timestamp="thread.publishedAt" />
+                </b>
             </div>
             <div class="ms-2 me-5">
                 <span class="badge bg-primary rounded-pill">{{repliesCount}}</span> replies

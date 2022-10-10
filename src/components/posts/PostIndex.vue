@@ -15,6 +15,10 @@ const getUserById = (id) => users.value.find((user) => user.id === id);
 
 const getImageSrc = (id) => `https://i.pravatar.cc/500?img=${id}`;
 
+
+
+
+
 onMounted(() => {
   users.value = data.users;
 });
@@ -33,7 +37,9 @@ onMounted(() => {
           </div>
           <div class="col">
             <p class="card-text">{{ post.text }}</p>
-            <p class="mb-4"><b>Published On:</b> {{ post.publishedAt }}</p>
+            <p class="mb-4"><em>Published at:</em> <b>
+              <AppDate :timestamp="post.publishedAt" />
+            </b></p>
             <a href="#" class="btn btn-primary">Read More</a>
           </div>
         </div>
