@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 
 const emits = defineEmits(['save'])
-
 const text = ref('');
 
 const handleSubmit = () => {

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
+// import Categories from "@/views/CategoryList.vue";
+import CategoryShow from "@/views/CategoryShow.vue";
 import ForumShow from "@/views/ForumShow.vue";
 import ThreadShow from "@/views/ThreadShow.vue";
 import NotFound from "@/views/NotFound.vue";
@@ -11,6 +13,14 @@ const router = createRouter({
     {
       path: "/", name: "home", component: Home,
     },
+    {
+      path: "/categories", name: "categories.index", component: Home,
+    },
+
+    {
+      path: "/categories/:id", name: "categories.show", component: CategoryShow, props: true
+    },
+
     {
       path: "/forums/:id", name: "forums.show", component: ForumShow, props: true,
       beforeEnter(to, from, next) {

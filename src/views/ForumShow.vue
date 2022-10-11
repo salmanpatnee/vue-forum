@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
 import data from "@/data.json";
+import { onMounted, ref, computed } from "vue";
 import ThreadList from "@/components/threads/ThreadIndex.vue";
 
 

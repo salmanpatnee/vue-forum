@@ -13,6 +13,8 @@ const threadsCount = computed(() => {
     return props.forum.threads  ? props.forum.threads.length : 0;
 })
 
+const threadCountsWord = threadsCount => threadsCount === 1 ? 'thread' : 'threads';
+
 </script>
     
 <template>
@@ -24,7 +26,10 @@ const threadsCount = computed(() => {
                 <!-- <em>Posted in: </em> <a href="">Category</a> -->
             </div>
             <div class="ms-2 me-5">
-                <span class="badge bg-primary rounded-pill">{{threadsCount}}</span> thread(s)
+                <span class="badge bg-primary rounded-pill">
+                    {{threadsCount}}
+                </span>
+                {{threadCountsWord(threadsCount)}}
             </div>
         </li>
     </router-link>

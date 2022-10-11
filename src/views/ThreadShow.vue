@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
 import data from "@/data.json";
+import { onMounted, ref, computed } from "vue";
 import PostList from '@/components/posts/PostIndex.vue';
 import PostCreate from "@/components/posts/PostCreate.vue";
 
@@ -35,9 +35,14 @@ onMounted(() => {
 <template>
   <div class="container">
     <h1>{{ thread.title }}</h1>
+
     <PostList :posts="threadPosts" />
+
     <hr>
+
     <h2 class="display-6">Add New Post</h2>
-    <PostCreate @save="handleSave"/>
+
+    <PostCreate @save="handleSave" />
+
   </div>
 </template>

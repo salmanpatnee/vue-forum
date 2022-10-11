@@ -1,6 +1,5 @@
 <script setup>
-import data from "@/data.json";
-import { onMounted, ref, computed } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 
 const props = defineProps({
@@ -10,14 +9,7 @@ const props = defineProps({
     }
 })
 
-const users = ref([]);
-
-const getUserById = (id) => users.value.find((user) => user.id === id);
-
-const repliesCount = computed(() => props.thread.posts.length - 1)
-onMounted(() => {
-  users.value = data.users;
-});
+const repliesCount = computed(() => props.thread.posts.length)
 
 </script>
     
