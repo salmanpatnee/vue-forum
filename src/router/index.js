@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
-// import Categories from "@/views/CategoryList.vue";
 import CategoryShow from "@/views/CategoryShow.vue";
 import ForumShow from "@/views/ForumShow.vue";
 import ThreadShow from "@/views/ThreadShow.vue";
