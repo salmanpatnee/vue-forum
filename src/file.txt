@@ -1,2 +1,0 @@
-lorem  ipsum dolar
-import data from another source

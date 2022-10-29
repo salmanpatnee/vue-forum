@@ -6,10 +6,7 @@ const text = ref('');
 
 const handleSubmit = () => {
     
-    const id = Math.random();
-
     const post = {
-        id: id,
         publishedAt: Math.floor(Date.now() / 100), 
         text: text.value, 
         userId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'

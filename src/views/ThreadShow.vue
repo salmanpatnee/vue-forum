@@ -1,6 +1,6 @@
 <script setup>
-import data from "@/data.json";
-import { onMounted, ref, computed } from "vue";
+import { useDataStore } from "@/stores/DataStore.js";
+import { computed } from "vue";
 import PostList from '@/components/posts/PostIndex.vue';
 import PostCreate from "@/components/posts/PostCreate.vue";
 
@@ -11,25 +11,24 @@ const props = defineProps({
   },
 });
 
-const threads = ref([]);
-const thread = ref([]);
-const posts = ref([]);
+const dataStore = useDataStore();
 
-const threadPosts = computed(() => posts.value.filter(post => post.threadId === props.id));
+dataStore.fill();
 
-const handleSave = (eventData) => {
-  //Merging data
-  const post = {...eventData.post, threadId: props.id}
-  
-  posts.value.push(post);
-  thread.value.posts.push(post.id);
-}
+const threads = computed(() => dataStore.data.threads);
 
-onMounted(() => {
-  threads.value = data.threads;
-  thread.value = threads.value.find((thread) => thread.id === props.id);
-  posts.value = data.posts;
+const thread = computed(() => {
+  if(!threads.value) return [];
+  return threads.value.find(thread => thread.id === props.id)
 });
+
+const posts = computed(() => dataStore.data.posts);
+
+const threadPosts = computed(() => {
+  if(!posts.value) return [];
+  return posts.value.filter(post => post.threadId === props.id)
+});
+
 </script>
 
 <template>
@@ -42,7 +41,8 @@ onMounted(() => {
 
     <h2 class="display-6">Add New Post</h2>
 
-    <PostCreate @save="handleSave" />
+    <!-- <PostCreate @save="handleSave" /> -->
+    <PostCreate @save="dataStore.addPost($event, thread)" />
 
   </div>
 </template>

@@ -1,14 +1,15 @@
 <script setup>
-import data from "@/data.json";
-import { onMounted, ref} from "vue";
+import { useDataStore } from "@/stores/DataStore.js";
+
+import { computed} from "vue";
 import CategoryList from "@/components/categories/CategoryIndex.vue";
 
-const categories = ref([]);
+const dataStore = useDataStore();
 
-onMounted(() => {
-    categories.value = data.categories;
-});
 
+dataStore.fill();
+
+const categories = computed(() => dataStore.data.categories);
 </script>
 
 

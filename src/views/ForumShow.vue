@@ -1,6 +1,6 @@
 <script setup>
-import data from "@/data.json";
-import { onMounted, ref, computed } from "vue";
+import { useDataStore } from "@/stores/DataStore.js";
+import { computed } from "vue";
 import ThreadList from "@/components/threads/ThreadIndex.vue";
 
 
@@ -11,24 +11,31 @@ const props = defineProps({
   },
 });
 
-const forums = ref([]);
-const forum = ref({});
-const threads = ref([]);
+const dataStore = useDataStore();
 
-const forumThreads = computed(() => threads.value.filter(thread => thread.forumId === props.id));
+dataStore.fill();
 
+const forums = computed(() => dataStore.data.forums);
 
-onMounted(() => {
-  forums.value = data.forums;
-  forum.value = forums.value.find((forum) => forum.id === props.id);
-  threads.value = data.threads;
+const forum = computed(() => {
+  if(!forums.value) return [];
+  return forums.value.filter(forum => forum.id === props.id)
 });
+
+const threads = computed(() => dataStore.data.threads);
+
+const forumThreads = computed(() => {
+  if(!threads.value) return [];
+  return threads.value.filter(thread => thread.forumId === props.id)
+});
+
+
 </script>
 
 <template>
   <div class="container">
     <h1>{{forum.name}}</h1>
     <p class="lead">{{forum.description}}</p>
-    <ThreadList :threads="forumThreads"/>
+    <ThreadList :threads="forumThreads" />
   </div>
 </template>

@@ -1,8 +1,7 @@
 <script setup>
-import data from "@/data.json";
-import { onMounted, ref, computed } from "vue";
+import { useDataStore } from "@/stores/DataStore.js";
+import {computed } from "vue";
 import ForumList from "@/components/forums/ForumIndex.vue";
-
 
 const props = defineProps({
   id: {
@@ -11,24 +10,28 @@ const props = defineProps({
   },
 });
 
-const categories = ref([]);
-const category = ref({});
-const forums = ref([]);
+const dataStore = useDataStore();
 
-const categoryForums = computed(() => forums.value.filter(thread => thread.categoryId === props.id));
+dataStore.fill();
 
+const categories = computed(() => dataStore.data.categories);
+const forums = computed(() => dataStore.data.forums);
 
-onMounted(() => {
-  categories.value = data.categories;
-  category.value = categories.value.find((category) => category.id === props.id);
-  forums.value = data.forums;
+const category = computed(() => {
+  if(!categories.value) return [];
+  return categories.value.filter(category => category.id === props.id)
 });
+
+const categoryForums = computed(() => {
+  return forums.value.filter(thread => thread.categoryId === props.id)
+});
+
 </script>
 
 <template>
   <div class="container">
-    <h1>{{category.name}}</h1>
-    <!-- <p class="lead">{{forum.description}}</p> -->
-    <ForumList :forums="categoryForums"/>
+
+    <h1>{{category[0].name}}</h1>
+    <ForumList :forums="categoryForums" />
   </div>
 </template>
